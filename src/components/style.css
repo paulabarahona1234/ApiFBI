@@ -1,0 +1,13 @@
+/* style.css */
+.resultado {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+  }
+  
+  .resultado img {
+    margin-top: 10px;
+    border-radius: 5px;
+  }
+  
