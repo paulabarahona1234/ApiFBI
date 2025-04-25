@@ -1,15 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import './style.css';
 
 function Menu() {
   return (
-    <nav>
+    <nav className="c-menu">
       <Link to="/">Lista</Link>
       <Link to="/aleatorios">Aleatorios</Link>
       <Link to="/capturados">Capturados</Link>
       <Link to="/favoritos">Favoritos</Link>
       <Link to="/usuario">Usuario</Link>
+      <Link to="/busqueda-avanzada">Avanzado</Link>
     </nav>
   );
 }
 
 export default Menu;
+
