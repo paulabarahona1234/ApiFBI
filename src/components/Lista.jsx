@@ -1,27 +1,26 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 function Lista() {
-  const [datos, setDatos] = useState([]);
-  const navigate = useNavigate();
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     fetch("https://api.fbi.gov/wanted/v1/list")
       .then(res => res.json())
-      .then(data => setDatos(data.items))
-      .catch(err => console.error(err));
+      .then(data => setData(data.items));
   }, []);
 
   return (
-    <>
-      <h1>Lista de Buscados</h1>
-      {datos.map((persona, index) => (
-        <div key={index} onClick={() => navigate(`/detalle/${persona.uid}`)}>
-          <p>{persona.title}</p>
-          <img src={persona.images[0]?.thumb} alt={persona.title} width="100" />
-        </div>
-      ))}
-    </>
+    <div>
+      <h1>Lista de Más Buscados</h1>
+      <ul>
+        {data.map(item => (
+          <li key={item.uid}>
+            <Link to={`/detalle/${item.uid}`}>{item.title}</Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 

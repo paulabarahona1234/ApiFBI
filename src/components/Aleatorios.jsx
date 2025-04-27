@@ -1,29 +1,25 @@
-import { useState, useEffect } from 'react';
-import './style.css';
+import { useState, useEffect } from "react";
 
 function Aleatorios() {
-  const [fugitivo, setFugitivo] = useState(null);
+  const [aleatorios, setAleatorios] = useState([]);
 
   useEffect(() => {
-    const obtenerAleatorio = async () => {
-      const res = await fetch('https://api.fbi.gov/wanted/v1/list?status=Captured');
-      const data = await res.json();
-      const randomIndex = Math.floor(Math.random() * data.items.length);
-      setFugitivo(data.items[randomIndex]);
-    };
-
-    obtenerAleatorio();
+    fetch("https://api.fbi.gov/wanted/v1/list")
+      .then(res => res.json())
+      .then(data => {
+        const mezclados = [...data.items].sort(() => 0.5 - Math.random());
+        setAleatorios(mezclados.slice(0, 5)); // 5 aleatorios
+      });
   }, []);
 
-  if (!fugitivo) return <p>Cargando...</p>;
-
   return (
-    <div className="c-fugitivo">
-      <h1>Fugitivo Aleatorio</h1>
-      <img src={fugitivo.images[0]?.thumb} alt={fugitivo.title} />
-      <p>{fugitivo.title}</p>
-      <p>{fugitivo.description}</p>
-      <p><a href={`https://www.fbi.gov/wanted/${fugitivo.title}`}>Ver más</a></p>
+    <div>
+      <h1>Casos Aleatorios</h1>
+      <ul>
+        {aleatorios.map(item => (
+          <li key={item.uid}>{item.title}</li>
+        ))}
+      </ul>
     </div>
   );
 }
